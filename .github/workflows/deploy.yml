@@ -28,15 +28,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          # Removed the cache setting line completely to bypass the lockfile error
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps # <-- Updated flag added here
 
       - name: Build React Application
         run: npm run build
-        env:
-          REACT_APP_ALPHA_VANTAGE_API_KEY: ${{ secrets.REACT_APP_ALPHA_VANTAGE_API_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
