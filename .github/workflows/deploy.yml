@@ -24,15 +24,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # Switched to Node 18 for peak stability with react-scripts
+          node-version: 18
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: Force Fix Broken Ajv Package
+        # This explicitly installs the missing module that react-scripts is crying about
+        run: npm install ajv ajv-keywords --legacy-peer-deps
 
       - name: Build React Application
         run: npm run build
         env:
           REACT_APP_ALPHA_VANTAGE_API_KEY: ${{ secrets.REACT_APP_ALPHA_VANTAGE_API_KEY }}
+          REACT_APP_FINNHUB_API_KEY: ${{secrets.REACT_APP_FINNHUB_API_KEY}}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
