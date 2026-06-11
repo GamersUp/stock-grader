@@ -50,6 +50,34 @@ export const DataFetcher: React.FC<DataFetcherProps> = ({ onDataFetch, onError }
         riskDeductions: 0,
       };
 
+      // 1. Translate Insider Transactions to 0-5 Score
+      let insiderScore = 2; // Default to Neutral
+      if (stockData.insiderNetSharesBought > 50000) {
+        insiderScore = 5; // Heavy buying
+      } else if (stockData.insiderNetSharesBought > 0) {
+        insiderScore = 4; // Moderate buying
+      } else if (stockData.insiderNetSharesBought < 0) {
+        insiderScore = 0; // Selling
+      }
+
+      // 2. Translate Analyst Ratings to 0-5 Score
+      let analystScore = 3; // Default to Neutral
+      const totalRatings = stockData.analystBuys + stockData.analystHolds + stockData.analystSells;
+      if (totalRatings > 0) {
+        const buyRatio = stockData.analystBuys / totalRatings;
+        const sellRatio = stockData.analystSells / totalRatings;
+
+        if (buyRatio > 0.75) {
+          analystScore = 5; // Strong upgrades/buys
+        } else if (buyRatio > 0.5) {
+          analystScore = 4; // Some upgrades/buys
+        } else if (sellRatio > 0.3) {
+          analystScore = 0; // Downgrades/Sells
+        } else {
+          analystScore = 2; // Mixed
+        }
+      }
+
       // Auto-populate opportunity metrics
       const fiftyTwoWeekRange = stockData.fiftyTwoWeekHigh - stockData.fiftyTwoWeekLow;
       const distanceFromHigh = fiftyTwoWeekRange > 0 
@@ -59,8 +87,8 @@ export const DataFetcher: React.FC<DataFetcherProps> = ({ onDataFetch, onError }
       const opportunityMetrics: OpportunityMetrics = {
         distanceFrom52High: Math.min(Math.max(Math.round((distanceFromHigh / 50) * 5), 0), 5),
         valuationDiscount: stockData.pe > 0 ? Math.min(Math.max(Math.round((20 / stockData.pe) * 5), 0), 5) : 2,
-        insiderBuying: 0,
-        analystRevisions: 0,
+        insiderBuying: insiderScore,
+        analystRevisions: analystScore,
         postEarningsReaction: 0,
         marginOfSafety: Math.min(Math.max(Math.round((distanceFromHigh / 40) * 5), 0), 5),
         movingAverages: technicalData.above200DMA ? 3 : technicalData.above150DMA ? 2 : technicalData.above50DMA ? 1 : 0,
