@@ -6,19 +6,19 @@ const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
 export interface StockData {
   ticker: string;
   company: string;
-  revenueGrowth: number; // YoY revenue growth %
-  epsGrowth: number; // YoY EPS growth %
-  grossMargin: number; // Current gross margin %
-  operatingMargin: number; // Current operating margin %
-  roe: number; // Return on equity %
-  netDebt: number; // Net debt
-  totalAssets: number; // Total assets
-  shares: number; // Shares outstanding
+  revenueGrowth: number;
+  epsGrowth: number;
+  grossMargin: number;
+  operatingMargin: number;
+  roe: number;
+  netDebt: number;
+  totalAssets: number;
+  shares: number;
   currentPrice: number;
   fiftyTwoWeekHigh: number;
   fiftyTwoWeekLow: number;
-  pe: number; // P/E ratio
-  pb: number; // Price to book
+  pe: number;
+  pb: number;
   error?: string;
 }
 
@@ -134,7 +134,6 @@ export const fetchStockData = async (ticker: string): Promise<StockData> => {
         totalAssets: 0,
         shares: 0,
         currentPrice: quote?.c || 0,
-        // Fixed fallback data points
         fiftyTwoWeekHigh: financials?.metric?.['52WeekHigh'] || 0,
         fiftyTwoWeekLow: financials?.metric?.['52WeekLow'] || 0,
         pe: financials?.metric?.peExclExtraTTM || 0,
@@ -174,55 +173,6 @@ export const fetchStockData = async (ticker: string): Promise<StockData> => {
       fiftyTwoWeekLow: fiftyTwoWeekLow,
       pe: Math.round(pe * 100) / 100, // Rounded cleanly to 2 decimals
       pb: metric.pbAnnual || metric.pbRatio || 0,
-    };
-  } catch (error) {
-    console.error('Error fetching stock data:', error);
-    return {
-      ticker: ticker.toUpperCase(),
-      company: 'Error',
-      revenueGrowth: 0,
-      epsGrowth: 0,
-      grossMargin: 0,
-      operatingMargin: 0,
-      roe: 0,
-      netDebt: 0,
-      totalAssets: 0,
-      shares: 0,
-      currentPrice: 0,
-      fiftyTwoWeekHigh: 0,
-      fiftyTwoWeekLow: 0,
-      pe: 0,
-      pb: 0,
-      error: 'Failed to fetch data. Please try again.',
-    };
-  }
-};
-
-    // Extract metrics from Finnhub data
-    const metric = financials.metric || {};
-    const roic = metric.roic || 0;
-    const roe = metric.roe || 0;
-    const grossMargin = metric.grossMargin || 0;
-    const operatingMargin = metric.operatingMarginTTM || 0;
-    const revenueGrowth = metric.revenueGrowth5Y || 0;
-    const epsGrowth = metric.epsGrowth5Y || 0;
-
-    return {
-      ticker: ticker.toUpperCase(),
-      company: profile.name || 'Unknown',
-      revenueGrowth: Math.round(revenueGrowth * 100) / 100,
-      epsGrowth: Math.round(epsGrowth * 100) / 100,
-      grossMargin: Math.round(grossMargin * 10000) / 100,
-      operatingMargin: Math.round(operatingMargin * 10000) / 100,
-      roe: Math.round(roe * 10000) / 100,
-      netDebt: metric.debtToEquity || 0,
-      totalAssets: metric.totalAssets || 0,
-      shares: metric.shareOutstandingTTM || 0,
-      currentPrice: quote.c || 0,
-      fiftyTwoWeekHigh: quote.h52 || 0,
-      fiftyTwoWeekLow: quote.l52 || 0,
-      pe: quote.pe || 0,
-      pb: metric.pbRatio || 0,
     };
   } catch (error) {
     console.error('Error fetching stock data:', error);
