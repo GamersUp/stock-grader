@@ -117,13 +117,12 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div
                   className="bg-green-600 h-2 rounded-full"
-                  style={{ width: `${Math.min(opportunityPercentage, 100)}%` }}
+                  style={{ width: `${Math.min(Number(opportunityPercentage), 100)}%` }}
                 />
               </div>
             </div>
           </div>
         </div>
-      </div>
 
       {/* Recommendation */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6 text-center">
