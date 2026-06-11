@@ -14,6 +14,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Tells GitHub to use the updated Node 24 runner
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,11 +27,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24 # Updated to Node 24 to clear the deprecation warning
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install # Changed from 'npm ci' so it doesn't fail without a lockfile
 
       - name: Build React Application
         run: npm run build
@@ -41,7 +44,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build' # Create React App compiles into the 'build' folder
+          path: './build'
 
       - name: Deploy to GitHub Pages
         id: deployment
