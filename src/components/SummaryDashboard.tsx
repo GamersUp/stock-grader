@@ -123,6 +123,7 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
             </div>
           </div>
         </div>
+      </div>
 
       {/* Recommendation */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6 text-center">
