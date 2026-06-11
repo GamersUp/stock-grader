@@ -18,6 +18,7 @@ export const fetchDailyData = async (ticker: string): Promise<any> => {
       params: {
         function: 'TIME_SERIES_DAILY',
         symbol: ticker.toUpperCase(),
+        outputsize: 'full', // <-- THIS FIXES IT: Forces the API to return the full history, not just 100 days
         apikey: ALPHA_VANTAGE_API_KEY,
       },
     });
@@ -51,10 +52,10 @@ export const calculateTechnicalIndicators = async (
     const prices = dates.map((date) => parseFloat(timeSeries[date]['4. close']));
     const currentPrice = prices[0];
 
-    // Calculate moving averages
-    const ma50 = prices.slice(0, 50).reduce((a, b) => a + b) / 50;
-    const ma150 = prices.slice(0, 150).reduce((a, b) => a + b) / 150;
-    const ma200 = prices.slice(0, 200).reduce((a, b) => a + b) / 200;
+    // Calculate moving averages (with protection for stocks with less than 200 days of history)
+    const ma50 = prices.slice(0, 50).reduce((a, b) => a + b, 0) / Math.min(prices.length, 50);
+    const ma150 = prices.slice(0, 150).reduce((a, b) => a + b, 0) / Math.min(prices.length, 150);
+    const ma200 = prices.slice(0, 200).reduce((a, b) => a + b, 0) / Math.min(prices.length, 200);
 
     // Calculate RSI (14-period)
     const rsiPeriod = 14;
