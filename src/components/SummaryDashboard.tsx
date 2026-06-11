@@ -97,7 +97,7 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div
                   className="bg-blue-600 h-2 rounded-full"
-                  style={{ width: `${Math.min(qualityPercentage, 100)}%` }}
+                  style={{ width: `${Math.min(Number(qualityPercentage), 100)}%` }}
                 />
               </div>
             </div>
