@@ -68,7 +68,6 @@ const App: React.FC = () => {
       qualityMetrics,
       opportunityMetrics,
       technicalMetrics,
-      technicalMetrics,
       managementMetrics: {
         shareCountTrend: 'flat',
         returningCapital: 'neutral'
