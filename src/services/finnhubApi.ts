@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const FINNHUB_API_KEY = process.env.REACT_APP_FINNHUB_API_KEY || 'demo';
 const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
-const REACT_APP_FINNHUB_API_KEY = "d8lgo1pr01qnkjl6af0gd8lgo1pr01qnkjl6af10"
 
 export interface StockData {
   ticker: string;
