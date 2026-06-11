@@ -68,7 +68,12 @@ const App: React.FC = () => {
       qualityMetrics,
       opportunityMetrics,
       technicalMetrics,
-      notes,
+      managementMetrics: {
+        capitalAllocation: 0,
+        insiderActivity: 'Neutral',
+        shareholderReturn: 0
+      },
+      notes: notes || ''
     };
 
     const updated = [...savedGrades, newGrade];
