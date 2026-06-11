@@ -68,10 +68,10 @@ const App: React.FC = () => {
       qualityMetrics,
       opportunityMetrics,
       technicalMetrics,
+      technicalMetrics,
       managementMetrics: {
-        capitalAllocation: 0,
-        insiderActivity: 'Neutral',
-        shareholderReturn: 0
+        shareCountTrend: 'flat',
+        returningCapital: 'neutral'
       },
       notes: notes || ''
     };
