@@ -1,116 +1,365 @@
-# Stock Grader
+````markdown
+# 📈 Stock Grader - Interactive Stock Analysis Tool
 
-An interactive stock grading system that scores companies based on quality and opportunity metrics. Designed for value investors looking to separate business fundamentals from mispricing opportunities.
+A modern, browser-based stock grading application that uses a **dual-scoring system** to evaluate stocks based on business quality and investment opportunity. Metrics are **automatically fetched from financial APIs** and can be manually adjusted for personalized analysis.
 
-## Features
+![Stock Grader](https://img.shields.io/badge/React-18-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
-- **Dual Scoring System**: Separate Quality Score (0-60) and Opportunity Score (0-40)
-- **Real-time Editing**: Adjust any metric and see live score updates
-- **Comprehensive Metrics**: 
-  - Business Quality (Revenue Growth, EPS Growth, Margins, ROE, Balance Sheet)
-  - Mispricing Opportunity (52-week drawdown, valuation discount, insider buying, analyst revisions, post-earnings reaction)
-  - Technical Health (Moving averages, relative strength, accumulation volume)
-  - Management (Share count trend, capital returns)
-  - Industry Analysis
-  - Risk Metrics
-  - Margin of Safety Score
+## 🌟 Features
 
-- **Local Storage**: Save and load your grades locally (no cloud required)
-- **Export**: Download your analysis as JSON or PDF
+### Core Functionality
+- ✅ **Dual Scoring System**: Separate Business Quality (0-60) from Investment Opportunity (0-40)
+- ✅ **Auto-Fetch Financial Data**: Automatically retrieves objective metrics from Finnhub & Alpha Vantage APIs
+- ✅ **Real-time Scoring**: Live score updates as you adjust metrics
+- ✅ **Smart Recommendations**: Automatic buy/hold/avoid recommendations based on scores
+- ✅ **Local Storage**: Save/load grades without cloud account
+- ✅ **Export Options**: Download grades as JSON or CSV
+- ✅ **No Installation Required**: Runs on GitHub Pages or locally
 
-## Getting Started
+### Metrics Included
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm (comes with Node.js)
+**Business Quality (0-60 pts)**
+- Revenue Growth (YoY)
+- EPS Growth (YoY)
+- Gross Margin Trend
+- Operating Margin Trend
+- Return on Equity (ROE)
+- Balance Sheet Health (Net Debt/EBITDA)
+- Share Count Trend
+- Capital Allocation (Dividends + Buybacks)
+- Industry Relative Strength
+- Risk Deductions
 
-### Installation
+**Investment Opportunity (0-40 pts)**
+- Distance from 52-week High
+- Valuation Discount vs Historical Average
+- Insider Buying Activity
+- Analyst Revisions
+- Post-Earnings Reaction
+- Margin of Safety
+- Moving Averages (50/150/200 DMA)
+- Technical Strength & Volume
 
-1. Clone the repository:
+---
+
+## 🚀 Quick Start
+
+### Option 1: Use Online (No Installation)
+Visit: **https://GamersUp.github.io/stock-grader**
+
+That's it! The app runs entirely in your browser.
+
+### Option 2: Run Locally
+
+**Prerequisites:**
+- Node.js (v14+) - [Download here](https://nodejs.org/)
+- Git
+
+**Steps:**
+
 ```bash
+# Clone the repository
 git clone https://github.com/GamersUp/stock-grader.git
 cd stock-grader
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Start the development server:
-```bash
+# Start the development server
 npm start
 ```
 
-4. Open your browser and navigate to `http://localhost:3000`
+The app will open at `http://localhost:3000`
 
-## How to Use
+---
 
-1. **Enter Stock Ticker**: Type the stock symbol (e.g., AAPL, MSFT)
-2. **Input Metrics**: Fill in financial data from your research
-3. **Adjust Scores**: Edit individual category scores as needed
-4. **View Composite Scores**: See real-time Quality vs. Opportunity scores
-5. **Save Your Grade**: Store locally or export for records
+## 🔑 API Keys (Optional but Recommended)
 
-## Scoring Breakdown
+The app works with or without API keys, but fetching financial data requires:
 
-### Quality Score (0-60 points)
-- Revenue Growth (6 pts)
-- EPS Growth (6 pts)
-- Gross Margin Trend (4 pts)
-- Operating Margin Trend (4 pts)
-- Return on Equity (5 pts)
-- Balance Sheet Health (5 pts)
-- Share Count Trend (5 pts)
-- Capital Returns (5 pts)
-- Industry Relative Strength (5 pts)
-- Risk Deductions (0-10 pts)
+### Getting Free API Keys
 
-### Opportunity Score (0-40 points)
-- Distance from 52-week High (5 pts)
-- Valuation Discount (5 pts)
-- Insider Buying (5 pts)
-- Analyst Revisions (5 pts)
-- Post-Earnings Reaction (5 pts)
-- Margin of Safety (5 pts)
-- Technical: Moving Averages (3 pts)
-- Technical: Relative Strength & Volume (2 pts)
+1. **Finnhub** (Financial Metrics)
+   - Go to: https://finnhub.io
+   - Sign up for free account
+   - Copy your API key
+   - Create `.env.local` in project root
+   - Add: `REACT_APP_FINNHUB_API_KEY=your_key_here`
 
-## Technology Stack
+2. **Alpha Vantage** (Technical Analysis)
+   - Go to: https://www.alphavantage.co
+   - Sign up for free account
+   - Copy your API key
+   - Add to `.env.local`: `REACT_APP_ALPHA_VANTAGE_API_KEY=your_key_here`
 
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Local Storage API** - Data persistence
+**Example `.env.local`:**
+```
+REACT_APP_FINNHUB_API_KEY=c123abc456def789ghi
+REACT_APP_ALPHA_VANTAGE_API_KEY=Z9Z8X7X6W5W4
+```
 
-## File Structure
+**Note:** The demo keys work but have rate limits. Free tier is usually sufficient for personal use.
+
+---
+
+## 📖 How to Use
+
+### 1. Fetch Financial Data (Recommended)
+- Enter a stock ticker (e.g., AAPL, MSFT, TSLA)
+- Click "📊 Fetch Data"
+- Wait 1-2 seconds for metrics to auto-populate
+- Adjust subjective metrics as needed
+
+### 2. Manual Entry
+- Enter ticker and company name manually
+- Adjust all metrics with sliders
+- See live score updates
+
+### 3. Review Results
+- **Quality Score** shows business fundamentals
+- **Opportunity Score** shows valuation & technical setup
+- **Recommendation** summarizes the analysis
+
+### 4. Save & Export
+- Click "💾 Save Grade" to store locally
+- Export as JSON (for backup) or CSV (for spreadsheet analysis)
+
+### 5. Load Previous Grades
+- Saved grades appear in "📚 Saved Grades" section
+- Click "Load" to review past analysis
+- Click "Delete" to remove
+
+---
+
+## 🎯 Scoring Logic
+
+### Recommendation Matrix
+
+| Quality | Opportunity | Recommendation |
+|---------|-------------|-----------------|
+| ≥80% | ≥70% | 🟢 **STRONG BUY** |
+| ≥80% | ≥50% | 🟢 **BUY** |
+| ≥70% | ≥70% | 🟢 **BUY** |
+| ≥60% | ≥50% | 🟡 **HOLD** |
+| <50% | ≥75% | 🔴 **AVOID** (Value Trap) |
+| ≥80% | <40% | 🟡 **WAIT** (Overpriced) |
+| Other | Other | 🔴 **AVOID** |
+
+### Auto-Populated Metrics
+
+When you fetch data, the app automatically calculates:
+
+- **Revenue Growth**: Based on 5-year historical data
+- **EPS Growth**: Based on 5-year historical data
+- **ROE**: Return on equity from latest financials
+- **P/E Ratio**: Current price-to-earnings ratio
+- **52-Week Range**: Highest and lowest prices over past year
+- **Technical Indicators**: 
+  - Moving averages (50, 150, 200 day)
+  - RSI (Relative Strength Index)
+  - Volume trends
+
+---
+
+## 📊 Data Sources
+
+| Metric Type | Source | API |
+|-------------|--------|-----|
+| Financial Metrics | Finnhub | HTTP REST API |
+| Technical Analysis | Alpha Vantage | HTTP REST API |
+| Local Storage | Browser | localStorage |
+
+All data is fetched in real-time. Historical grades are stored locally in your browser (not on cloud).
+
+---
+
+## 🛠️ Customization
+
+### Modify Score Thresholds
+Edit `src/utils/calculations.ts`:
+
+```typescript
+export const getRecommendation = (
+  qualityScore: number,
+  opportunityScore: number
+): string => {
+  const qualityPercentage = (qualityScore / 60) * 100;
+  const opportunityPercentage = (opportunityScore / 40) * 100;
+
+  if (qualityPercentage >= 80 && opportunityPercentage >= 70) {
+    return '🟢 STRONG BUY - High quality, strong opportunity';
+  }
+  // ... modify thresholds here
+};
+```
+
+### Change UI Colors
+Edit `tailwind.config.js` or modify className colors in components.
+
+### Add Custom Metrics
+1. Update `src/types/stock.ts` with new fields
+2. Add components in `src/components/`
+3. Update calculation logic in `src/utils/calculations.ts`
+
+---
+
+## 📱 Browser Support
+
+- Chrome/Edge (v90+)
+- Firefox (v88+)
+- Safari (v14+)
+- Mobile browsers (responsive design)
+
+---
+
+## 🚀 Deployment to GitHub Pages
+
+### Step 1: Install gh-pages
+```bash
+npm install --save-dev gh-pages
+```
+
+### Step 2: Update package.json
+Already done! Check your `homepage` field:
+```json
+"homepage": "https://GamersUp.github.io/stock-grader"
+```
+
+### Step 3: Build & Deploy
+```bash
+npm run deploy
+```
+
+Your app will be live at: `https://GamersUp.github.io/stock-grader`
+
+### Step 4: GitHub Pages Settings (Optional)
+1. Go to repo Settings → Pages
+2. Verify "Build and deployment" is set to "Deploy from a branch"
+3. Branch should be `gh-pages` (auto-created)
+
+---
+
+## 💾 Data Persistence
+
+All your saved grades are stored locally in your browser using `localStorage`. This means:
+
+✅ **No cloud account needed**
+✅ **Your data stays private**
+✅ **Works offline**
+❌ **Data lost if browser cache is cleared**
+
+To backup: Export your grades as JSON files.
+
+---
+
+## 🐛 Troubleshooting
+
+### API Key Not Working
+```
+Error: "Unable to fetch complete data"
+```
+- Verify API key is correct at Finnhub.io or AlphaVantage.co
+- Check rate limits (free tier: ~5 calls/min)
+- Try again in a minute
+- Works without keys (uses demo mode)
+
+### Port 3000 Already in Use
+```bash
+# Kill existing process (Mac/Linux)
+lsof -ti:3000 | xargs kill -9
+
+# Or use different port
+PORT=3001 npm start
+```
+
+### Module Not Found
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules
+npm install
+```
+
+### Grades Not Saving
+- Check browser localStorage is enabled
+- Try clearing cache and reloading
+- Different browsers have separate storage
+
+---
+
+## 📚 Project Structure
 
 ```
 stock-grader/
+├── public/
+│   └── index.html
 ├── src/
 │   ├── components/
-│   │   ├── StockGrader.tsx      # Main application component
-│   │   ├── QualityScores.tsx    # Quality scoring section
-│   │   ├── OpportunityScores.tsx # Opportunity scoring section
-│   │   ├── TechnicalMetrics.tsx  # Technical analysis section
-│   │   └── SummaryDashboard.tsx  # Score summary & export
+│   │   ├── QualityScores.tsx
+│   │   ├── OpportunityScores.tsx
+│   │   ├── SummaryDashboard.tsx
+│   │   ├── DataFetcher.tsx
+│   │   └── MetricInputs.tsx
+│   ├── services/
+│   │   ├── finnhubApi.ts
+│   │   └── technicalAnalysisApi.ts
 │   ├── types/
-│   │   └── stock.ts             # TypeScript interfaces
+│   │   └── stock.ts
 │   ├── utils/
-│   │   └── calculations.ts      # Scoring calculations
-│   ├── App.tsx                  # App wrapper
-│   ├── index.tsx                # Entry point
-│   └── index.css                # Global styles
-├── public/
-│   └── index.html               # HTML template
-├── package.json                 # Dependencies
-└── README.md                    # This file
+│   │   └── calculations.ts
+│   ├── App.tsx
+│   ├── index.tsx
+│   └── index.css
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+└── .env.example
 ```
 
-## Contributing
+---
 
-Feel free to fork and customize this for your own investment strategy.
+## 🤝 Contributing
 
-## License
+Contributions welcome! To add features:
 
-MIT License - feel free to use this however you like.
+1. Fork the repo
+2. Create feature branch: `git checkout -b feature/my-feature`
+3. Commit changes: `git commit -am 'Add my feature'`
+4. Push to branch: `git push origin feature/my-feature`
+5. Submit pull request
+
+---
+
+## 📄 License
+
+MIT License - feel free to use, modify, and distribute.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Finnhub** - Financial data API
+- **Alpha Vantage** - Technical analysis data
+- **React** - UI framework
+- **Tailwind CSS** - Styling
+
+---
+
+## 📞 Support
+
+For issues, questions, or suggestions:
+- Open a GitHub issue
+- Check existing issues for solutions
+- Verify API keys are set correctly
+
+---
+
+## 🎓 Educational Note
+
+This tool is designed for **educational purposes and personal investment research**. Always do your own due diligence and consult with a financial advisor before making investment decisions.
+
+**Disclaimer:** This app provides analysis tools only. Not financial advice. Past performance ≠ future results.
+
+---
+
+**Happy investing! 📈**
+````
